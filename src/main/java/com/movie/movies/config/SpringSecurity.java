@@ -45,7 +45,7 @@ public class SpringSecurity {
         .authorizeHttpRequests((authorize) ->
                 authorize
                 .requestMatchers(HttpMethod.POST , "/api/auth/**").permitAll()
-                .requestMatchers("/api/**").permitAll()
+                .requestMatchers("/api/movies/**").authenticated()
                 
 
         ).csrf()

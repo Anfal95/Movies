@@ -130,7 +130,7 @@ public class MovieServiceImpl implements MovieService {
         return ResponseEntity.ok().body(similatMovies);
 	}
 	
-	public ResponseEntity<List<Map<String, Object>>> movieCast(Long movieId) {
+	public ResponseEntity<Map<String, Object>> movieCast(Long movieId) {
 			
 		String url = "https://api.themoviedb.org/3/movie/"+ movieId +"/credits?api_key=" + apiKey;
 		
@@ -138,16 +138,12 @@ public class MovieServiceImpl implements MovieService {
 
         // Extract the list of movies from the response
         Map<String, Object> responseBody = responseEntity.getBody();
-        List<Map<String, Object>> movieCast = (List<Map<String, Object>>) responseBody.get("results");
-        
-        if(movieCast.isEmpty()) {
-        	throw new BaseException("There are no cast in this movie", "MOVIES_CAST_NOT_FOUND");
-        }
+        Map<String, Object> movieCast = responseBody;
         
         return ResponseEntity.ok().body(movieCast);
 	}
 	
-	public ResponseEntity<List<Map<String, Object>>> moviePosters(Long movieId) {
+	public ResponseEntity<Map<String, Object>> moviePosters(Long movieId) {
 		
 		String url = "https://api.themoviedb.org/3/movie/"+ movieId +"/images?api_key=" + apiKey;
 		
@@ -155,11 +151,8 @@ public class MovieServiceImpl implements MovieService {
 
         // Extract the list of movies from the response
         Map<String, Object> responseBody = responseEntity.getBody();
-        List<Map<String, Object>> moviePosters = (List<Map<String, Object>>) responseBody.get("results");
-        
-        if(moviePosters.isEmpty()) {
-        	throw new BaseException("There are no posters for this movie", "STAR_MOVIES_NOT_FOUND");
-        }
+        Map<String, Object> moviePosters = responseBody;
+
         
         return ResponseEntity.ok().body(moviePosters);
 	}
@@ -169,20 +162,21 @@ public class MovieServiceImpl implements MovieService {
         return restTemplate.getForObject(url, Star.class);
 	}
 
-	public ResponseEntity<List<Map<String, Object>>> starMovies(Long starId) {
+	public ResponseEntity<Map<String, Object>> starMovies(Long starId) {
 		String url = "https://api.themoviedb.org/3/person/"+ starId +"/movie_credits?api_key=" + apiKey;
 		
 		ResponseEntity<Map> responseEntity = restTemplate.getForEntity(url, Map.class);
 
         // Extract the list of movies from the response
         Map<String, Object> responseBody = responseEntity.getBody();
-        List<Map<String, Object>> starMovies = (List<Map<String, Object>>) responseBody.get("results");
+        Map<String, Object> starMovies = responseBody;
+        
         
         if(starMovies.isEmpty()) {
         	throw new BaseException("There are no movies for this star", "STAR_MOVIES_NOT_FOUND");
         }
         
-        return ResponseEntity.ok().body(starMovies);
+        return ResponseEntity.ok().body(responseBody);
 	}
 
 }

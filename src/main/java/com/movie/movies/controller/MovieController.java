@@ -81,16 +81,15 @@ public class MovieController {
 	
 	@GetMapping("/cast/{movieId}")
 	@CrossOrigin(origins = "http://localhost:3002")
-    public ResponseEntity<List<Map<String, Object>>> movieCast(@PathVariable Long movieId) {
+    public ResponseEntity<Map<String, Object>> movieCast(@PathVariable Long movieId) {
 		
-		ResponseEntity<List<Map<String, Object>>> movieCast = movieService.movieCast(movieId);
+		ResponseEntity<Map<String, Object>> movieCast = movieService.movieCast(movieId);
         return movieCast;
     }
 	
 	@GetMapping("/posters/{movieId}")
-    public ResponseEntity<List<Map<String, Object>>> moviePosters(@PathVariable Long movieId) {
-		
-		ResponseEntity<List<Map<String, Object>>> moviePosters = movieService.moviePosters(movieId);
+    public ResponseEntity<Map<String, Object>> moviePosters(@PathVariable Long movieId) {
+		ResponseEntity<Map<String, Object>> moviePosters = movieService.moviePosters(movieId);
         return moviePosters;
     }
 	
@@ -101,8 +100,8 @@ public class MovieController {
     }
 	
 	@GetMapping("/starMovies/{starId}")
-    public ResponseEntity<List<Map<String, Object>>> starMovies(@PathVariable Long starId) {
-		ResponseEntity<List<Map<String, Object>>> starMovies = movieService.starMovies(starId);
+    public ResponseEntity<Map<String, Object>> starMovies(@PathVariable Long starId) {
+		ResponseEntity<Map<String, Object>> starMovies = movieService.starMovies(starId);
         return starMovies;
     }
 	
